@@ -1,0 +1,26 @@
+{
+  "context-menu": {
+    "atom-text-editor": [
+      {
+        "label": "Toggle heta-highlight-atom",
+        "command": "heta-highlight-atom:toggle"
+      }
+    ]
+  },
+  "menu": [
+    {
+      "label": "Packages",
+      "submenu": [
+        {
+          "label": "heta-highlight-atom",
+          "submenu": [
+            {
+              "label": "Toggle",
+              "command": "heta-highlight-atom:toggle"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "heta-highlight-atom",
+  "main": "./lib/heta-highlight-atom",
+  "version": "0.1.0",
+  "description": "The package is plugin for Atom editor to highlight Heta language code",
+  "keywords": [ "heta", "atom-plugin", "highlight", "modeling", "qsp", "systems-biology"],
+  "contributors": [
+    "Evgeny Metelkin <evgeny.metelkin@gmail.com> (https://github.com/metelkin)",
+    "Victoria Tkachenko (https://github.com/vetedde)"
+  ],
+  "activationCommands": {
+    "atom-workspace": "heta-highlight-atom:toggle"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/insysbio/heta-highlight-atom"
+  },
+  "license": "MIT",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "dependencies": {
+  }
+}
