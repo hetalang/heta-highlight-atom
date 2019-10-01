@@ -1,0 +1,190 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Heta language",
+	"scopeName": "source.heta",
+	"fileTypes": [ "heta" ],
+	"limitLineLength": false,
+	"patterns": [
+		{ "include": "#linecomment" },
+		{ "include": "#blockcomment" },
+		{ "include": "#note" },
+		{ "include": "#namespace" },
+		{ "include": "#basestruct" }
+	],
+	"repository": {
+		"index": {
+			"name": "meta.index.heta",
+			"match": "(?:([A-Za-z_]\\w*)::)?([A-Za-z_]\\w*)",
+			"captures":{
+				"1": {
+					"name": "space.heta"
+				},
+				"2": {
+					"name": "variable.parameter.id.heta"
+				}
+			}
+		},
+		"assignmentShort": {
+			"name": "meta.assignment.heta",
+			"match": "([.:`]?\\=)\\s*([^,;@#']+)",
+			"captures": {
+				"1": {
+					"name": "keyword.operator.short.heta"
+				},
+				"2": {
+					"name": "string.other.expression.heta"
+				}
+			}
+		},
+		"assignment": {
+			"name": "meta.assignment.heta",
+			"match": "(\\[([a-zA-Z_]?\\w*)\\]=)\\s*([^,;]+)",
+			"captures": {
+				"1":{
+					"name": "keyword.operator.long.heta"
+				},
+				"2":{
+					"name": "id.heta"
+				},
+				"3": {
+					"name": "string.other.expression.heta"
+				}
+			}
+		},
+		"namespace": {
+			"name": "meta.namespace.heta",
+			"begin": "(namespace)\\s+(.*)\\s+(begin)",
+			"beginCaptures": {
+				"1": {
+					"name": "keyword.control.reserved.heta"
+				},
+				"2": {
+					"name": "space.heta",
+					"patterns": []
+				},
+				"3": {
+					"name": "keyword.control.begin.heta"
+				}
+			},
+			"end": "end",
+			"endCaptures": {
+				"0": { "name": "keyword.control.end.heta" }
+			},
+			"patterns": [
+				{ "include": "#linecomment" },
+				{ "include": "#blockcomment" },
+				{ "include": "#note"},
+				{ "include": "#basestruct"}
+			]
+		},
+		"basestruct": {
+			"name": "meta.basestruct.heta",
+			"end": ";",
+			"patterns": [
+				{ "include": "#index" },
+				{ "include": "#linecomment" },
+				{ "include": "#blockcomment" },
+				{ "include": "#class" },
+				{ "include": "#action" },
+				{ "include": "#title" },
+				{ "include": "#dict" },
+				{ "include": "#assignmentShort" },
+				{ "include": "#assignment" }
+			]
+		},
+		"dict": {
+			"begin": "\\{",
+			"beginCaptures": {
+				"0": {
+					"name": "dictionary.begin.heta"
+				}
+			},
+			"end": "\\}",
+			"endCaptures": {
+				"0": {
+					"name": "dictionary.end.heta"
+				}
+			},
+			"name": "meta.dictionary.heta",
+			"patterns": [
+				{
+					"include": "#linecomment"
+				},
+				{
+					"name": "entity.other.heta",
+					"begin": "([A-Za-z_][A-Za-z0-9_]*)\\s*:\\s*",
+					"beginCaptures": {
+						"1": {
+							"name": "variable.other.key.heta"
+						}
+					},
+					"end": ",|$|(?=//)|(?=/\\*)|(?=\\})",
+					"patterns": [
+						{ "include": "#linecomment" },
+						{ "include": "#dict" },
+						{ "include": "#array" },
+						{ "include": "#boolean" },
+						{ "include": "#number" },
+						{ "include": "#string" }
+					]
+				}
+			]
+		},
+		"number": {
+			"name": "constant.numeric.heta",
+			"match": "[-+]?[0-9]+[.]?[0-9]*([eE][-+]?[0-9]+)?"
+		},
+		"boolean": {
+			"name": "constant.language.heta",
+			"match": "(true)|(false)"
+		},
+		"string": {
+			"name": "string.other.heta",
+			"match": "(\".*?\")|\\w([^\",\\}\\]]*)"
+		},
+		"array": {
+			"name": "meta.array.heta",
+			"begin": "\\[",
+			"end": "\\]",
+			"patterns": [			
+				{
+					"match": "([ \\r\\n]*),([ \\r\\n]*)",
+					"name": "punctuation.separator.array.heta"
+				},
+				{ "include": "#linecomment" },
+				{ "include": "#dict" },
+				{ "include": "#array" },
+				{ "include": "#boolean" },	
+				{ "include": "#number" },	
+				{ "include": "#string" }
+			]
+		},
+		"note": {
+			"name": "comment.block.documentation.note.heta",
+			"begin": "'''",
+			"end": "'''"
+		},
+		"class": {
+			"name": "support.class.heta",
+			"match": "@\\w+"
+		},
+		"title":{
+			"name": "string.quoted.heta",
+			"match": "'.*?'"
+		},
+		"linecomment": {
+			"name": "comment.line.double-slash.heta",
+			"begin": "//",
+			"end": "$"
+		},
+		"blockcomment": {
+			"name": "comment.block.heta",
+			"begin": "/\\*",
+			"end": "\\*/"
+		},
+		"action": {
+			"name": "support.function.action.heta",
+			"match": "#\\w+"
+		}
+	}
+}

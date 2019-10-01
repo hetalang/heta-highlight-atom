@@ -1,8 +1,11 @@
 {
   "name": "language-heta",
   "main": "./lib/heta-highlight-atom",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "The package is plugin for Atom editor to highlight Heta language code",
+  "scripts": {
+      "publish": "apm publish"
+  },
   "keywords": [
     "heta",
     "atom-plugin",
