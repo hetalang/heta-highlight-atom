@@ -8,10 +8,15 @@
 		{ "include": "#linecomment" },
 		{ "include": "#blockcomment" },
 		{ "include": "#note" },
+		{ "include": "#includeStatement" },
 		{ "include": "#namespace" },
 		{ "include": "#basestruct" }
 	],
 	"repository": {
+		"unknown": {
+			"name": "invalid.illegal",
+			"match": ".+"
+		},
 		"index": {
 			"name": "meta.index.heta",
 			"match": "(?:([A-Za-z_]\\w*)::)?([A-Za-z_]\\w*)",
@@ -24,45 +29,78 @@
 				}
 			}
 		},
-		"assignmentShort": {
+		"assignmentConst": {
 			"name": "meta.assignment.heta",
-			"match": "([.:`]?\\=)\\s*([^,;@#']+)",
+			"match": "(=)\\s*([-+]?[0-9]+[.]?[0-9]*([eE][-+]?[0-9]+)?)",
 			"captures": {
 				"1": {
 					"name": "keyword.operator.short.heta"
 				},
 				"2": {
-					"name": "string.other.expression.heta"
+					"name": "constant.numeric.heta"
 				}
 			}
 		},
 		"assignment": {
 			"name": "meta.assignment.heta",
-			"match": "(\\[([a-zA-Z_]?\\w*)\\]=)\\s*([^,;]+)",
-			"captures": {
-				"1":{
-					"name": "keyword.operator.long.heta"
-				},
-				"2":{
-					"name": "id.heta"
+			"begin": "([.:]=)|(\\[(\\w*)\\]=)",
+			"end": "(?=[;{@#'])",
+			"beginCaptures": {
+				"0": {
+					"name": "keyword.operator.short.heta"
 				},
 				"3": {
+					"name": "id.heta"
+				}
+			},
+			"patterns": [
+				{ 
+					"match": "[^;{@#']*", 
 					"name": "string.other.expression.heta"
+				}
+			]
+		},
+		"includeStatement": {
+			"name": "meta.include.heta",
+			"match": "(include)\\s+(\"?[\\w./\\-]+\"?)(?:\\s+(type)\\s+(\"?\\w+\"?))?(?:\\s+(with)\\s+(.+))?",
+			"captures": {
+				"1": {
+					"name": "keyword.control.reserved.heta"
+				},
+				"2": {
+					"name": "string.other.heta"
+				},
+				"3": {
+					"name": "keyword.control.reserved.heta"
+				},
+				"4": {
+					"name": "string.other.heta"
+				},
+				"5": {
+					"name": "keyword.control.reserved.heta"
+				},
+				"6": {
+					"patterns": [
+						{ "include": "#dict" }
+					]
 				}
 			}
 		},
 		"namespace": {
 			"name": "meta.namespace.heta",
-			"begin": "(namespace)\\s+(.*)\\s+(begin)",
+			"begin": "(\\b(abstract|concrete)\\b)?\\s*\\b(namespace)\\b\\s+(.*)\\s+(begin)",
 			"beginCaptures": {
 				"1": {
 					"name": "keyword.control.reserved.heta"
 				},
-				"2": {
+				"3": {
+					"name": "keyword.control.reserved.heta"
+				},
+				"4": {
 					"name": "space.heta",
 					"patterns": []
 				},
-				"3": {
+				"5": {
 					"name": "keyword.control.begin.heta"
 				}
 			},
@@ -73,6 +111,7 @@
 			"patterns": [
 				{ "include": "#linecomment" },
 				{ "include": "#blockcomment" },
+				{ "include": "#includeStatement" },
 				{ "include": "#note"},
 				{ "include": "#basestruct"}
 			]
@@ -88,7 +127,7 @@
 				{ "include": "#action" },
 				{ "include": "#title" },
 				{ "include": "#dict" },
-				{ "include": "#assignmentShort" },
+				{ "include": "#assignmentConst" },
 				{ "include": "#assignment" }
 			]
 		},
@@ -118,7 +157,7 @@
 							"name": "variable.other.key.heta"
 						}
 					},
-					"end": ",|$|(?=//)|(?=/\\*)|(?=\\})",
+					"end": ",|(?=//)|(?=/\\*)|(?=\\})",
 					"patterns": [
 						{ "include": "#linecomment" },
 						{ "include": "#dict" },
@@ -132,7 +171,7 @@
 		},
 		"number": {
 			"name": "constant.numeric.heta",
-			"match": "[-+]?[0-9]+[.]?[0-9]*([eE][-+]?[0-9]+)?"
+			"match": "[-+]?[0-9]+[.]?[0-9]*([eE][-+]?[0-9]+)?\\b"
 		},
 		"boolean": {
 			"name": "constant.language.heta",
@@ -140,7 +179,7 @@
 		},
 		"string": {
 			"name": "string.other.heta",
-			"match": "(\".*?\")|\\w([^\",\\}\\]]*)"
+			"match": "(\".*?\")|([^\",\\}\\]]*)"
 		},
 		"array": {
 			"name": "meta.array.heta",
