@@ -1,7 +1,9 @@
 [![Heta project](https://img.shields.io/badge/%CD%B1-Heta_project-blue)](https://hetalang.github.io/)
 [![APM](https://img.shields.io/apm/v/language-heta)](https://atom.io/packages/language-heta)
 ![APM](https://img.shields.io/apm/dm/language-heta)
-![GitHub](https://img.shields.io/github/license/insysbio/heta-highlight-atom)
+![GitHub](https://img.shields.io/github/license/hetalang/heta-highlight-atom)
+
+**!!! This project is not longer maintained. Use [heta-highlight-vscode](https://github.com/hetalang/heta-highlight-vscode)**
 
 # heta-highlight-atom package
 
